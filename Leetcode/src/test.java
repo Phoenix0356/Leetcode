@@ -9,6 +9,6 @@ public class test {
         int[] arr=new int[]{1,1,2,2,4,4};
         List<Integer> l=new ArrayList<>();
         for (int i:arr) l.add(i);
-        g.minLengthAfterRemovals(l);
+
     }
 }
