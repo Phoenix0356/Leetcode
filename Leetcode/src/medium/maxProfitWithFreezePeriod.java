@@ -1,6 +1,6 @@
 package medium;
 
-public class maxProfit2 {
+public class maxProfitWithFreezePeriod {
     public int maxProfit(int[] prices) {
         if (prices.length==1) return 0;
         int[][] dp=new int[prices.length][3];

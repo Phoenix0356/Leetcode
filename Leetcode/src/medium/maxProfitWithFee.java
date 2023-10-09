@@ -1,6 +1,6 @@
 package medium;
 
-public class maxProfit3 {
+public class maxProfitWithFee {
     public int maxProfit(int[] prices, int fee) {
         int hold=-prices[0];
         int sold=0;
