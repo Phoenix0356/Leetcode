@@ -7,7 +7,6 @@ public class maxPathSum {
     public int maxPathSum(TreeNode root) {
         dfs(root);
         return max;
-
     }
     int dfs(TreeNode node){
         if (node==null) return 0;
