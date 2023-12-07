@@ -3,12 +3,12 @@ package medium;
 import util.TreeNode;
 
 public class bstToGst {
-    int sum = 0;
+    int sum=0;
     public TreeNode bstToGst(TreeNode root) {
-        if (root != null) {
+        if (root!=null) {
             bstToGst(root.right);
-            sum += root.val;
-            root.val = sum;
+            root.val += sum;
+            sum = root.val;
             bstToGst(root.left);
         }
         return root;
