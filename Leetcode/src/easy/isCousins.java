@@ -13,7 +13,7 @@ public class isCousins {
     }
     boolean isParent(TreeNode node,int x,int y){
         if (node == null) return true;
-        if (node.left== null) return isParent(node.right,x,y);
+        if (node.left == null) return isParent(node.right,x,y);
         if (node.right == null) return isParent(node.left, x, y);
         if (node.left.val == x){
             return node.right.val != y;
