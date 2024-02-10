@@ -2,13 +2,13 @@ package easy;
 
 public class isCousins {
     public boolean isCousins(TreeNode root, int x, int y) {
-        return dfs(root,x,0) == dfs(root,y,0)&&isParent(root, x, y);
+        return isBrother(root,x,0) == isBrother(root,y,0)&&isParent(root, x, y);
     }
-    int dfs(TreeNode node, int tar,int cur){
+    int isBrother(TreeNode node, int tar,int cur){
         if (node == null) return 0;
         if (tar == node.val) return cur;
-        int leftDepth = dfs(node.left,tar,cur+1);
-        int rightDepth = dfs(node.right,tar, cur+1);
+        int leftDepth = isBrother(node.left,tar,cur+1);
+        int rightDepth = isBrother(node.right,tar, cur+1);
         return Math.max(leftDepth,rightDepth);
     }
     boolean isParent(TreeNode node,int x,int y){
