@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.PriorityQueue;
 
 public class longestDiverseString {
+
     public String longestDiverseString(int a, int b, int c) {
         PriorityQueue<int[]> q = new PriorityQueue<>((x, y)->y[1]-x[1]);
         if (a > 0) q.add(new int[]{0, a});
