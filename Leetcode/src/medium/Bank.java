@@ -1,6 +1,7 @@
 package medium;
 
 public class Bank {
+
     long[] act;
     public Bank(long[] balance) {
         this.act=balance;
