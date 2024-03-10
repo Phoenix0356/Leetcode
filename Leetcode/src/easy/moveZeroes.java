@@ -4,13 +4,17 @@ import java.util.Arrays;
 
 public class moveZeroes {
     public void moveZeroes(int[] nums) {
-        int[] arr = new int[nums.length];
-        int ind = 0;
-        for (int num : nums) if (num != 0) arr[ind++] = num;
-        ind=0;
-        for (int num : arr) nums[ind++]=num;
+        int slow = 0,fast = 0;
+        while (fast<nums.length) {
+            if (nums[fast] == 0){
+                fast++;
+            }else {
+                nums[slow++] = nums[fast++];
+            }
+        }
+        while (slow< nums.length){
+            nums[slow] = 0;
+        }
 
     }
-
-
 }
