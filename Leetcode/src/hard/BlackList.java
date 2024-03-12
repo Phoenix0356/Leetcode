@@ -4,30 +4,37 @@ import java.util.*;
 
 public class BlackList {
 
-    int validLen;
-    int[] arr;
+    int lastInd;
+    int validSize;
+    Map<Integer,Integer> map;
 
     Random random = new Random();
     public BlackList(int n, int[] blacklist) {
-        arr = new int[n];
-        validLen = n;
+        validSize = n-blacklist.length;
+        map = new HashMap<>();
+        lastInd = n-1;
 
-        for (int i=0;i<n;i++){
-            arr[i] = i;
-
+        for (int i:blacklist){
+           map.put(i,1000);
+        }
+        for (int i:blacklist){
+            if (i>validSize){
+                continue;
+            }
+            while (map.containsKey(lastInd)){
+                lastInd--;
+            }
+            map.put(i,lastInd);
         }
 
-        for (int i : blacklist) {
 
-            int temp = arr[validLen-1];
-            arr[validLen-1] = i;
-            arr[i] = temp;
-
-            validLen--;
-        }
     }
 
     public int pick() {
-        return arr[random.nextInt(validLen)];
+        int num = random.nextInt(validSize);
+        if (map.containsKey(num)){
+            return map.get(num);
+        }
+        return num;
     }
 }
