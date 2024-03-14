@@ -1,19 +1,6 @@
 package medium;
 
 import util.TreeNode;
-
-class TreeNodes {
-      int val;
-      TreeNode left;
-      TreeNode right;
-      TreeNodes() {}
-      TreeNodes(int val) { this.val = val; }
-      TreeNodes(int val, TreeNode left, TreeNode right) {
-          this.val = val;
-          this.left = left;
-          this.right = right;
-      }
-  }
 public class constructMaximumBinaryTree {
         public TreeNode constructMaximumBinaryTree(int[] nums) {
             return construct(nums, 0, nums.length - 1);
