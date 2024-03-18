@@ -14,6 +14,7 @@ public class test {
     private final static int threadCount = 20;
 
     public static String pictureToBase64(String path)  {
+        
         String pictureBase64;
         try {
             byte[] pictureBytes = Files.readAllBytes(Paths.get(path));
