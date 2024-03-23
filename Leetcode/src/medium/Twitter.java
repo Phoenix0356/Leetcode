@@ -4,9 +4,9 @@ import java.util.*;
 
 public class Twitter {
     HashMap<Integer,User> userHashMap;
-
     int time;
     public Twitter() {
+
         time = 0;
         userHashMap = new HashMap<>();
     }
