@@ -1,15 +1,13 @@
 package medium;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class combinationSum {
     List<List<Integer>> ans;
     HashSet<Integer> set;
+    Thread thread;
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
-
+        PriorityQueue<Integer> queue = new PriorityQueue<>((o1,o2)->o1-o2);
         ans = new ArrayList<>();
         set = new HashSet<>();
         ArrayList<Integer> list = new ArrayList<>();
