@@ -5,22 +5,26 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class Sort {
-    static final int DEFAULT_ARR_LENGTH = 5000;
+    static int arrLen = 5000;
+    static int traverseTimes = 1000;
 
     public static void main(String[] args) {
-        RandomArray randomArray = new RandomArray(DEFAULT_ARR_LENGTH);
+        RandomArray randomArray = new RandomArray(arrLen);
         int[] nums = randomArray.getRandomArr();
-        sortTest(nums, () -> mergeSort(nums));
+        sortTest("归并",nums,() -> mergeSort(nums));
+        sortTest("冒泡",nums,()->bubbleSort(nums));
+        sortTest("插入",nums,()->insertionSort(nums));
     }
-    static void sortTest(int[] nums,Strategy strategy){
+    static void sortTest(String sortName,int[] nums,Strategy strategy){
 
         long start = System.currentTimeMillis();
-        printArr(nums);
-        for (int i =0;i<1000;i++) {
+
+        for (int i =0;i<traverseTimes;i++) {
             strategy.sortStrategy();
         }
-        printArr(nums);
-        System.out.println("耗时："+(System.currentTimeMillis()-start)+"ms");
+
+        System.out.print(sortName+"  ");
+        System.out.print("耗时："+(System.currentTimeMillis()-start)+"ms"+"  ");
         System.out.println("是否有效："+isSortValid(nums));
 
     }
@@ -29,10 +33,7 @@ public class Sort {
         for (int i = 1; i < nums.length; i++) {
             if (nums[i-1]>nums[i]) return false;
         }
-        int arrayToBeValidatedHash = Arrays.hashCode(nums);
-        Arrays.sort(nums);
-        int arraySortedHash = Arrays.hashCode(nums);
-        return arraySortedHash == arrayToBeValidatedHash;
+        return true;
     }
     private static void swap(int[] nums,int leftInd,int rightInd){
         int temp = nums[leftInd];
@@ -68,7 +69,6 @@ public class Sort {
             }
         }
     }
-
 
 
     //归并排序
@@ -141,6 +141,4 @@ public class Sort {
     interface Strategy{
         public void sortStrategy();
     }
-
-
 }
