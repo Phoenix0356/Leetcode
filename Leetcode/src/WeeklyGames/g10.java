@@ -35,7 +35,7 @@ public class g10 {
 //        }
 //        arr[ind]=cnt;
 //        cnt=0;
-//        Arrays.sort(arr);
+//        Arrays.Sort(arr);
 //        for (int i=0;i<arr.length;i++){
 //            if (arr[i]==0||i==arr.length-1) continue;
 //            for (int j=i;j<arr.length;j++){

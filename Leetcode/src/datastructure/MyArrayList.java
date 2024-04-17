@@ -34,8 +34,6 @@ public class MyArrayList<T>  {
         return size == 1;
     }
 
-
-
     private Object[] growSize(int sizeNeed){
         int oldCapacity = elements.length;
         if (oldCapacity>0||elements != DEFAULT_ELEMENTS){

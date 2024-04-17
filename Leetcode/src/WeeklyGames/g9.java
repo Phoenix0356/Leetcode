@@ -69,7 +69,7 @@ public class g9 {
 //    public int countKSubsequencesWithMaxBeauty(String s, int k) {
 //        int[] arr=new int[26];
 //        for (int i=0;i<s.length();i++) arr[s.charAt(i)-'a']++;
-//        Arrays.sort(arr);
+//        Arrays.Sort(arr);
 //        int ind=26;
 //        int temp=k;
 //        while (temp>0) temp-=arr[--ind];
