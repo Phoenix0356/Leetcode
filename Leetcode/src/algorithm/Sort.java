@@ -1,30 +1,46 @@
 package algorithm;
 
-import java.sql.Timestamp;
+import javax.swing.*;
 import java.util.Arrays;
 import java.util.Random;
 
 public class Sort {
-    static int arrLen = 5000;
-    static int traverseTimes = 1000;
+    static int arrLen = 1000000;
+    static int iterationCounts = 1;
 
-    public static void main(String[] args) {
+    @SuppressWarnings("all")
+    public static void main(String[] args) throws InterruptedException {
+
         RandomArray randomArray = new RandomArray(arrLen);
-        int[] nums = randomArray.getRandomArr();
-        sortTest("归并",nums,() -> mergeSort(nums));
-        sortTest("冒泡",nums,()->bubbleSort(nums));
-        sortTest("插入",nums,()->insertionSort(nums));
-    }
-    static void sortTest(String sortName,int[] nums,Strategy strategy){
 
+        sortTest("JDK", randomArray.getRandomArr(), nums ->{Arrays.sort(nums);});
+
+        sortTest("单线程归并",randomArray.getRandomArr(),nums ->{mergeSort(nums);});
+//      sortTest("冒泡",randomArray.getRandomArr(),nums ->{
+//          for (int i =0;i<iterationCounts;i++) {
+//              bubbleSort(nums);
+//          }
+//      });
+        sortTest("插入",randomArray.getRandomArr(),nums -> insertionSort(nums));
+        sortTest("2线程归并",randomArray.getRandomArr(),nums->{
+            int[] partLeft = Arrays.copyOfRange(nums, 0, nums.length / 2);
+            int[] partRight = Arrays.copyOfRange(nums, nums.length / 2, nums.length);
+            Thread thread1 = new Thread(() -> mergeSort(partRight));
+            Thread thread2 = new Thread(() -> mergeSort(partLeft));
+            thread1.start();
+            thread2.start();
+            thread1.join();
+            thread2.join();
+            mergeSorted(nums,partLeft,partRight);
+        });
+    }
+    static void sortTest(String sortName,int[] nums,Strategy strategy) throws InterruptedException {
         long start = System.currentTimeMillis();
 
-        for (int i =0;i<traverseTimes;i++) {
-            strategy.sortStrategy();
-        }
+        strategy.sortStrategy(nums);
 
         System.out.print(sortName+"  ");
-        System.out.print("耗时："+(System.currentTimeMillis()-start)+"ms"+"  ");
+        System.out.print("耗时："+((System.currentTimeMillis()-start))+"ms"+"  ");
         System.out.println("是否有效："+isSortValid(nums));
 
     }
@@ -46,6 +62,31 @@ public class Sort {
             System.out.print(num+" ");
         }
         System.out.println();
+    }
+
+    public static void mergeSorted(int[] nums,int[] partLeft,int[] partRight){
+        int leftPointer = 0;
+        int rightPointer = 0;
+        int ind = 0;
+        while (leftPointer < partLeft.length && rightPointer < partRight.length) {
+            int l = partLeft[leftPointer];
+            int r = partRight[rightPointer];
+            if (l <= r) {
+                nums[ind++] = l;
+                leftPointer++;
+            } else {
+                nums[ind++] = r;
+                rightPointer++;
+            }
+        }
+
+        while (leftPointer < partLeft.length) {
+            nums[ind++] = partLeft[leftPointer++];
+        }
+
+        while (rightPointer < partRight.length) {
+            nums[ind++] = partRight[rightPointer++];
+        }
     }
 
     //冒泡排序
@@ -139,6 +180,6 @@ public class Sort {
         }
     }
     interface Strategy{
-        public void sortStrategy();
+        void sortStrategy(int[] nums) throws InterruptedException;
     }
 }
