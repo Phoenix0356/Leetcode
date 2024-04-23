@@ -1,27 +1,22 @@
 package algorithm;
 
-import javax.swing.*;
-import java.util.Arrays;
-import java.util.Random;
+import java.util.*;
 
 public class Sort {
-    static int arrLen = 1000000;
+    static int arrLen = 100000;
     static int iterationCounts = 1;
 
     @SuppressWarnings("all")
     public static void main(String[] args) throws InterruptedException {
-
+       
         RandomArray randomArray = new RandomArray(arrLen);
 
         sortTest("JDK", randomArray.getRandomArr(), nums ->{Arrays.sort(nums);});
 
         sortTest("单线程归并",randomArray.getRandomArr(),nums ->{mergeSort(nums);});
-//      sortTest("冒泡",randomArray.getRandomArr(),nums ->{
-//          for (int i =0;i<iterationCounts;i++) {
-//              bubbleSort(nums);
-//          }
-//      });
-        sortTest("插入",randomArray.getRandomArr(),nums -> insertionSort(nums));
+        sortTest("冒泡",randomArray.getRandomArr(),nums -> bubbleSort(nums));
+        sortTest("选择",randomArray.getRandomArr(),nums -> selectiveSort(nums));
+        sortTest("插入",randomArray.getRandomArr(),nums -> insertSort(nums));
         sortTest("2线程归并",randomArray.getRandomArr(),nums->{
             int[] partLeft = Arrays.copyOfRange(nums, 0, nums.length / 2);
             int[] partRight = Arrays.copyOfRange(nums, nums.length / 2, nums.length);
@@ -100,12 +95,25 @@ public class Sort {
         }
     }
 
-    //插入排序
-    public static void insertionSort(int[] nums){
+    //选择排序
+    public static void selectiveSort(int[] nums){
         for (int i = 0;i< nums.length;i++){
+            int minInd = i;
             for (int j = i+1;j< nums.length;j++){
-                if (nums[i]>nums[j]){
-                    swap(nums,i,j);
+                if (nums[minInd]>nums[j]){
+                    minInd = j;
+                }
+            }
+            swap(nums,i,minInd);
+        }
+    }
+
+    //插入排序
+    public static void insertSort(int[] nums){
+        for (int i = 0;i< nums.length-1;i++){
+            for (int j = i+1;j>0;j--){
+                if (nums[j-1]>nums[j]){
+                    swap(nums,j-1,j);
                 }
             }
         }
