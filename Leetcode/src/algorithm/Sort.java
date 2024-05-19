@@ -6,17 +6,19 @@ public class Sort {
     static int arrLen = 100000;
     static int iterationCounts = 1;
 
+    static int randIntBound = 100000;
+
     @SuppressWarnings("all")
     public static void main(String[] args) throws InterruptedException {
        
         RandomArray randomArray = new RandomArray(arrLen);
 
         sortTest("JDK", randomArray.getRandomArr(), nums ->{Arrays.sort(nums);});
-
         sortTest("单线程归并",randomArray.getRandomArr(),nums ->{mergeSort(nums);});
         sortTest("冒泡",randomArray.getRandomArr(),nums -> bubbleSort(nums));
         sortTest("选择",randomArray.getRandomArr(),nums -> selectiveSort(nums));
         sortTest("插入",randomArray.getRandomArr(),nums -> insertSort(nums));
+//        sortTest("快速",randomArray.getRandomArr(),nums -> {quickSort(nums);});
         sortTest("2线程归并",randomArray.getRandomArr(),nums->{
             int[] partLeft = Arrays.copyOfRange(nums, 0, nums.length / 2);
             int[] partRight = Arrays.copyOfRange(nums, nums.length / 2, nums.length);
@@ -33,6 +35,7 @@ public class Sort {
         long start = System.currentTimeMillis();
 
         strategy.sortStrategy(nums);
+//        printArr(nums);
 
         System.out.print(sortName+"  ");
         System.out.print("耗时："+((System.currentTimeMillis()-start))+"ms"+"  ");
@@ -46,10 +49,10 @@ public class Sort {
         }
         return true;
     }
-    private static void swap(int[] nums,int leftInd,int rightInd){
-        int temp = nums[leftInd];
-        nums[leftInd] = nums[rightInd];
-        nums[rightInd] = temp;
+    private static void swap(int[] nums,int ind1,int ind2){
+        int temp = nums[ind1];
+        nums[ind1] = nums[ind2];
+        nums[ind2] = temp;
     }
 
     public static void printArr(int[] nums){
@@ -58,6 +61,7 @@ public class Sort {
         }
         System.out.println();
     }
+
 
     public static void mergeSorted(int[] nums,int[] partLeft,int[] partRight){
         int leftPointer = 0;
@@ -95,6 +99,37 @@ public class Sort {
         }
     }
 
+    //快速排序
+    public static void quickSort(int[] nums){
+        doQuickSort(nums,0, nums.length-1);
+    }
+
+    public static void doQuickSort(int[] nums, int start,int end){
+        if (start>=end){
+            return;
+        }
+        int pivot = nums[start];
+        int left = start,right = end;
+        boolean isComparingRight = true;
+        while (left<right){
+            if (isComparingRight){
+                while (right>left&&nums[right]>pivot){
+                    right--;
+                }
+                swap(nums,left,right);
+                isComparingRight = false;
+            }else {
+                while (left<right&&nums[left]<=pivot){
+                    left++;
+                }
+                swap(nums,right,left);
+                isComparingRight = true;
+            }
+        }
+        doQuickSort(nums,start,left);
+        doQuickSort(nums,left+1,end);
+    }
+
     //选择排序
     public static void selectiveSort(int[] nums){
         for (int i = 0;i< nums.length;i++){
@@ -114,6 +149,8 @@ public class Sort {
             for (int j = i+1;j>0;j--){
                 if (nums[j-1]>nums[j]){
                     swap(nums,j-1,j);
+                }else {
+                    break;
                 }
             }
         }
@@ -182,7 +219,7 @@ public class Sort {
 
         public int[] getRandomArr(){
             for (int i = 0; i < arr.length; i++) {
-                arr[i] = rand.nextInt(100);
+                arr[i] = rand.nextInt(randIntBound);
             }
             return arr;
         }
